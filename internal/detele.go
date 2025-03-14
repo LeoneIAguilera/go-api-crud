@@ -14,14 +14,14 @@ func deleteEntity(c *gin.Context, entity any, entityName string) {
 
 	entityID, err := strconv.Atoi(id)
 
-	if err != nil {		
+	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"Error": "Failed to get id",
 		})
 
 		return
 	}
-	
+
 	checkID := initializers.DB.Where("id = ?", entityID).First(&entity)
 
 	if checkID.Error != nil || checkID.RowsAffected == 0 {

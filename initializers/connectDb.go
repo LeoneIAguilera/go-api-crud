@@ -21,7 +21,6 @@ func ConnectDb() {
 	if err != nil {
 		panic("Failed to connect database")
 	}
-	
 	migrateModels := []any{
 		&models.User{},
 		&models.Debt{},

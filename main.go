@@ -14,6 +14,14 @@ func init() {
 }
 
 func main() {
+	//close DB
+	conn, err := initializers.DB.DB()
+	if err != nil {
+		panic("Failed to get instance")
+	}
+
+	defer conn.Close()
+
 	r := gin.Default()
 
 	//User Controllers
