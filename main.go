@@ -28,7 +28,8 @@ func main() {
 	r.POST("/signup", controllers.Signup)
 	r.POST("/login", controllers.Login)
 	r.GET("/validate",middleware.RequireAuth, controllers.Validate)
-
+	r.POST("/logout", controllers.Logout)
+	
 	// Create routes
 	r.POST("/sales/create", middleware.RequireAuth, internal.CreateSales)
 	r.POST("/payments/create", middleware.RequireAuth, internal.CreatePayments)
