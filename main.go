@@ -1,10 +1,13 @@
 package main
 
 import (
+	"time"
+
 	"github.com/LeoneIAguilera/web-simple-two/controllers"
 	"github.com/LeoneIAguilera/web-simple-two/initializers"
 	"github.com/LeoneIAguilera/web-simple-two/internal"
 	"github.com/LeoneIAguilera/web-simple-two/middleware"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
@@ -23,35 +26,44 @@ func main() {
 	defer conn.Close()
 
 	r := gin.Default()
+	api := r.Group("/api")
+	
+	api.Use(cors.New(cors.Config{
+        AllowOrigins:     []string{"http://localhost:5173"},
+        AllowMethods:     []string{"GET", "POST", "OPTIONS"},
+        AllowHeaders:     []string{"Content-Type", "Authorization"},
+        AllowCredentials: true,
+        MaxAge:           12 * time.Hour *30,
+    }))
 
 	//User Controllers
-	r.POST("/signup", controllers.Signup)
-	r.POST("/login", controllers.Login)
-	r.GET("/validate",middleware.RequireAuth, controllers.Validate)
-	r.POST("/logout",middleware.RequireAuth, controllers.Logout)
+	api.POST("/signup", controllers.Signup)
+	api.OPTIONS("/login", controllers.Login)
+	api.GET("/validate",middleware.RequireAuth, controllers.Validate)
+	api.POST("/logout",middleware.RequireAuth, controllers.Logout)
 	
 	// Create routes
-	r.POST("/sales/create", middleware.RequireAuth, internal.CreateSales)
-	r.POST("/payments/create", middleware.RequireAuth, internal.CreatePayments)
-	r.POST("/debts/create", middleware.RequireAuth, internal.CreateDebt)
-	r.POST("/suppliers/create", middleware.RequireAuth, internal.CreateSupplier)
+	api.POST("/sales/create", middleware.RequireAuth, internal.CreateSales)
+	api.POST("/payments/create", middleware.RequireAuth, internal.CreatePayments)
+	api.POST("/debts/create", middleware.RequireAuth, internal.CreateDebt)
+	api.POST("/suppliers/create", middleware.RequireAuth, internal.CreateSupplier)
 
 	// Delete routes
-	r.DELETE("/sales/:id", middleware.RequireAuth, internal.DeleteSales)
-	r.DELETE("/payments/:id", middleware.RequireAuth, internal.DeletePayments)
-	r.DELETE("/debts/:id", middleware.RequireAuth, internal.DeleteDebt)
-	r.DELETE("/suppliers/:id", middleware.RequireAuth, internal.DeleteSupplier)
+	api.DELETE("/sales/:id", middleware.RequireAuth, internal.DeleteSales)
+	api.DELETE("/payments/:id", middleware.RequireAuth, internal.DeletePayments)
+	api.DELETE("/debts/:id", middleware.RequireAuth, internal.DeleteDebt)
+	api.DELETE("/suppliers/:id", middleware.RequireAuth, internal.DeleteSupplier)
 
 	// Updates routes
-	r.PUT("/payments/:id", middleware.RequireAuth, internal.UpdatePayments)
-	r.PUT("/debts/:id", middleware.RequireAuth, internal.UpdateDebt)
-	r.PUT("/suppliers/:id", middleware.RequireAuth, internal.UpdateSupplier)
+	api.PUT("/payments/:id", middleware.RequireAuth, internal.UpdatePayments)
+	api.PUT("/debts/:id", middleware.RequireAuth, internal.UpdateDebt)
+	api.PUT("/suppliers/:id", middleware.RequireAuth, internal.UpdateSupplier)
 
 	// RetrieveAll
-	r.GET("/sales", middleware.RequireAuth, internal.ViewSales)
-	r.GET("/payments", middleware.RequireAuth, internal.ViewPayments)
-	r.GET("/debts", middleware.RequireAuth, internal.ViewDebts)
-	r.GET("/suppliers", middleware.RequireAuth, internal.ViewSuppliers)
+	api.GET("/sales", middleware.RequireAuth, internal.ViewSales)
+	api.GET("/payments", middleware.RequireAuth, internal.ViewPayments)
+	api.GET("/debts", middleware.RequireAuth, internal.ViewDebts)
+	api.GET("/suppliers", middleware.RequireAuth, internal.ViewSuppliers)
 
 	r.Run()
 }
