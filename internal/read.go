@@ -43,7 +43,7 @@ func viewAllEntity(c *gin.Context, entity any, entityName string) {
 	}
 	if result.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"Error": "No " + entityName + "found",
+			"Error": "No " + entityName + " found",
 		})
 
 		return
