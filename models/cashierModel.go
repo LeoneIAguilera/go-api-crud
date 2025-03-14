@@ -6,7 +6,7 @@ import (
 
 type Sales struct {
 	gorm.Model
-	Amount		float64 `json:"Amount"`
+	Amount		float64  `json:"Amount"`
 }
 
 type Payments struct {
@@ -26,5 +26,5 @@ type Debt struct {
 
 type Supplier struct {
 	gorm.Model
-	Name 		string		`json:"Name" gorm:"unique"`
+	Name 		string	 `json:"Name" gorm:"unique"`
 }
