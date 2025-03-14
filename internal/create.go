@@ -8,7 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func createEntity(c *gin.Context, entity interface{}, entityName string) {
+func createEntity(c *gin.Context, entity any, entityName string) {
 
 	result := initializers.DB.Create(entity)
 

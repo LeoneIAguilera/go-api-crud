@@ -31,7 +31,7 @@ func viewAllEntityPreload(c *gin.Context, entity interface{}, entityName string,
 	})
 }
 
-func viewAllEntity(c *gin.Context, entity interface{}, entityName string) {
+func viewAllEntity(c *gin.Context, entity any, entityName string) {
 	result := initializers.DB.Find(entity)
 
 	if result.Error != nil {

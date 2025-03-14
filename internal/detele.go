@@ -9,7 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func deleteEntity(c *gin.Context, entity interface{}, entityName string) {
+func deleteEntity(c *gin.Context, entity any, entityName string) {
 	id := c.Param("id")
 
 	entityID, err := strconv.Atoi(id)

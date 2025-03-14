@@ -21,6 +21,7 @@ func ConnectDb() {
 	if err != nil {
 		panic("Failed to connect database")
 	}
+	
 	migrateModels := []any{
 		&models.User{},
 		&models.Debt{},
@@ -30,8 +31,7 @@ func ConnectDb() {
 	}
 
 	for _, model := range migrateModels {
-		err := DB.AutoMigrate(model) 
-		if err != nil {
+		if err := DB.AutoMigrate(model); err != nil {
 			log.Fatalf("Error to migrate the model: %T error: %v", model, err)
 		}
 		
