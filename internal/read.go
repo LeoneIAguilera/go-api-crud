@@ -8,7 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func retrieveAllEntityPreload(c *gin.Context, entity interface{}, entityName string, preLoad string) {
+func viewAllEntityPreload(c *gin.Context, entity interface{}, entityName string, preLoad string) {
 	result := initializers.DB.Preload(preLoad).Find(entity)
 
 	if result.Error != nil {
@@ -31,7 +31,7 @@ func retrieveAllEntityPreload(c *gin.Context, entity interface{}, entityName str
 	})
 }
 
-func retrieveAllEntity(c *gin.Context, entity interface{}, entityName string) {
+func viewAllEntity(c *gin.Context, entity interface{}, entityName string) {
 	result := initializers.DB.Find(entity)
 
 	if result.Error != nil {
@@ -54,20 +54,20 @@ func retrieveAllEntity(c *gin.Context, entity interface{}, entityName string) {
 	})
 }
 
-func RetrieveAllSales(c *gin.Context) {
+func ViewSales(c *gin.Context) {
 	var sales []models.Sales
-	retrieveAllEntity(c, &sales, "sales")
+	viewAllEntity(c, &sales, "sales")
 }
 
-func RetrieveAllPayments(c *gin.Context) {
+func ViewPayments(c *gin.Context) {
 	var payments []models.Payments
-	retrieveAllEntityPreload(c, &payments, "payments", "Supplier")
+	viewAllEntityPreload(c, &payments, "payments", "Supplier")
 }
-func RetrieveAllDebt(c *gin.Context) {
+func ViewDebts(c *gin.Context) {
 	var debt []models.Debt
-	retrieveAllEntityPreload(c, &debt, "debt", "Supplier")
+	viewAllEntityPreload(c, &debt, "debts", "Supplier")
 }
-func RetrieveAllSupplier(c *gin.Context) {
+func ViewSuppliers(c *gin.Context) {
 	var supplier []models.Supplier
-	retrieveAllEntity(c, &supplier, "supplier")
+	viewAllEntity(c, &supplier, "suppliers")
 }

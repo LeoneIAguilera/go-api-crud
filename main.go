@@ -39,10 +39,10 @@ func main() {
 	r.PUT("/suppliers/:id", middleware.RequireAuth, internal.UpdateSupplier)
 
 	// RetrieveAll
-	r.GET("/sales", middleware.RequireAuth, internal.RetrieveAllSales)
-	r.GET("/payments", middleware.RequireAuth, internal.RetrieveAllPayments)
-	r.GET("/debts", middleware.RequireAuth, internal.RetrieveAllDebt)
-	r.GET("/suppliers", middleware.RequireAuth, internal.RetrieveAllSupplier)
+	r.GET("/sales", middleware.RequireAuth, internal.ViewSales)
+	r.GET("/payments", middleware.RequireAuth, internal.ViewPayments)
+	r.GET("/debts", middleware.RequireAuth, internal.ViewDebts)
+	r.GET("/suppliers", middleware.RequireAuth, internal.ViewSuppliers)
 
 	r.Run()
 }

@@ -45,7 +45,6 @@ func deleteEntity(c *gin.Context, entity interface{}, entityName string) {
 	c.Status(http.StatusNoContent)
 }
 
-
 func DeleteSales(c *gin.Context) {
 	var sales models.Sales
 	deleteEntity(c, &sales, "sales")
@@ -65,4 +64,3 @@ func DeleteSupplier(c *gin.Context) {
 	var supplier models.Supplier
 	deleteEntity(c, &supplier, "supplier")
 }
-
