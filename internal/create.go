@@ -9,7 +9,6 @@ import (
 )
 
 func createEntity(c *gin.Context, entity any, entityName string) {
-
 	result := initializers.DB.Create(entity)
 
 	if result.Error != nil {
