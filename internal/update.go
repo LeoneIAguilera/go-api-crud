@@ -24,7 +24,7 @@ func updateEntity(c *gin.Context, entity interface{}, upEntity interface{}, enti
 	
 	if result.Error != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"Error": "Error updating" + entityName,
+			"Error": "Error updating " + entityName,
 		})
 
 		return
@@ -38,14 +38,14 @@ func updateEntity(c *gin.Context, entity interface{}, upEntity interface{}, enti
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{
-		"message": entityName + "updated successfully!",
+		"message": entityName + " updated successfully!",
 	})
 }
 
 func checkBody(c *gin.Context, body interface{}) {
 	if c.Bind(body) != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"Error": "Failed to read body: " ,
+			"Error": "Failed to read body",
 		})
 
 		return
@@ -57,31 +57,31 @@ func UpdatePayments(c *gin.Context) {
 		Amount 		float64
 		SupplierID  uint
 	}
+	checkBody(c, &body)
+	
 	var payments models.Payments
-
 	update := models.Payments{
 		Amount: body.Amount,
 		SupplierID: body.SupplierID,
 	}
 	
-	checkBody(c, &body)
 	
-	updateEntity(c, &payments, &update, "payments")
+	updateEntity(c, &payments, update, "payments")
 }
 
 func UpdateSupplier(c *gin.Context) {
 	var body struct {
 		Name 	string
 	}
+	checkBody(c, &body)
+	
 	var supplier models.Supplier
-
 	update := models.Supplier{
 		Name: body.Name,
 	}
 	
-	checkBody(c, &body)
 	
-	updateEntity(c, &supplier, &update, "debt")
+	updateEntity(c, &supplier, update, "debt")
 }
 func UpdateDebt(c *gin.Context) {
 	var body struct {
@@ -89,16 +89,14 @@ func UpdateDebt(c *gin.Context) {
 		Description 	string
 		SupplierID  	uint
 	}
+	checkBody(c, &body)
+	
 	var debt models.Debt
-
 	update := models.Debt{
 		Amount: body.Amount,
 		Description: body.Description,
 		SupplierID: body.SupplierID,
 	}
+	updateEntity(c, &debt, update, "debt")
 	
-	checkBody(c, &body)
-	
-	updateEntity(c, &debt, &update, "debt")
 }
-
