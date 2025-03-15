@@ -35,6 +35,7 @@ func main() {
 		AllowCredentials: true,
 		MaxAge:           12 * time.Hour,
 	}))
+	
 	api := r.Group("/api")
 	
 	//User Controllers
@@ -66,5 +67,5 @@ func main() {
 	api.GET("/debts", middleware.RequireAuth, internal.ViewDebts)
 	api.GET("/suppliers", middleware.RequireAuth, internal.ViewSuppliers)
 
-	r.Run(":8080")
+	r.Run()
 }
