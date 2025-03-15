@@ -8,7 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func viewAllEntityPreload(c *gin.Context, entity interface{}, entityName string, preLoad string) {
+func viewAllEntityPreload(c *gin.Context, entity any, entityName string, preLoad string) {
 	result := initializers.DB.Preload(preLoad).Find(entity)
 
 	if result.Error != nil {
