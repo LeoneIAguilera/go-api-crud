@@ -26,19 +26,20 @@ func main() {
 	defer conn.Close()
 
 	r := gin.Default()
+	
+	r.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"http://localhost:5173"}, // Permite solicitudes desde el frontend
+		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"}, // Métodos permitidos
+		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"}, // Encabezados permitidos
+		ExposeHeaders:    []string{"Content-Length"}, // Encabezados expuestos
+		AllowCredentials: true, // Permite el envío de cookies
+		MaxAge:           12 * time.Hour, // Duración del preflight cache
+	}))
 	api := r.Group("/api")
 	
-	api.Use(cors.New(cors.Config{
-        AllowOrigins:     []string{"http://localhost:5173"},
-        AllowMethods:     []string{"GET", "POST", "OPTIONS"},
-        AllowHeaders:     []string{"Content-Type", "Authorization"},
-        AllowCredentials: true,
-        MaxAge:           12 * time.Hour *30,
-    }))
-
 	//User Controllers
 	api.POST("/signup", controllers.Signup)
-	api.OPTIONS("/login", controllers.Login)
+	api.POST("/login", controllers.Login)
 	api.GET("/validate",middleware.RequireAuth, controllers.Validate)
 	api.POST("/logout",middleware.RequireAuth, controllers.Logout)
 	
@@ -65,5 +66,5 @@ func main() {
 	api.GET("/debts", middleware.RequireAuth, internal.ViewDebts)
 	api.GET("/suppliers", middleware.RequireAuth, internal.ViewSuppliers)
 
-	r.Run()
+	r.Run(":8080")
 }
