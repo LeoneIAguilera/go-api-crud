@@ -28,12 +28,12 @@ func main() {
 	r := gin.Default()
 	
 	r.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"http://localhost:5173"}, // Permite solicitudes desde el frontend
-		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"}, // Métodos permitidos
-		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"}, // Encabezados permitidos
-		ExposeHeaders:    []string{"Content-Length"}, // Encabezados expuestos
-		AllowCredentials: true, // Permite el envío de cookies
-		MaxAge:           12 * time.Hour, // Duración del preflight cache
+		AllowOrigins:     []string{"http://localhost:5173"},
+		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"},
+		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+		MaxAge:           12 * time.Hour,
 	}))
 	api := r.Group("/api")
 	
